@@ -48,7 +48,10 @@ export class HomeComponent implements OnInit {
     const person:Person = {
       ...this.form.value
     };
+    if (this.form.get('isMarried').value === 'True')
     person.isMarried = true;
+    if (this.form.get('isMarried').value === 'False')
+      person.isMarried = false;
     console.log(person)
     this.api.createPerson(person).subscribe(response => console.log(response),error => console.log(error));
   }

@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using CsvHelper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using TestApp.CsvModels;
 using TestApp.Data;
 using TestApp.Models;
 
@@ -72,6 +76,22 @@ namespace TestApp.Controllers
             return NoContent();
         }
 
+        [HttpPost]
+        [Route("import")]
+        public void ImportPerson(IFormFile file)
+        {
+            using (var reader = new StreamReader(file.OpenReadStream()))
+            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+            {
+                var records = csv.GetRecords<PersonCsv>().ToList();
+                foreach (var record in records)
+                {
+                    
+                }
+               _context.AddRange(records);
+            }
+
+        }
         // POST: api/People
         [HttpPost]
         public async Task<ActionResult<Person>> PostPerson(Person person)
