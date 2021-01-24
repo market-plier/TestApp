@@ -1,0 +1,93 @@
+<h1>People</h1>
+<div fxLayout="column" fxLayoutAlign="space-evenly center">
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" >
+
+  <ng-container matColumnDef="position">
+    <th mat-header-cell *matHeaderCellDef> ID </th>
+    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef> Name </th>
+    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="date">
+    <th mat-header-cell *matHeaderCellDef> Date </th>
+    <td mat-cell *matCellDef="let element"> {{element.dateOfBirth}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="isMarried">
+    <th mat-header-cell *matHeaderCellDef> Is Married </th>
+    <td mat-cell *matCellDef="let element"> {{element.isMarried}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="phone">
+    <th mat-header-cell *matHeaderCellDef> Phone </th>
+    <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="salary">
+    <th mat-header-cell *matHeaderCellDef> Salary </th>
+    <td mat-cell *matCellDef="let element"> {{element.salary}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="columns"></tr>
+  <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+</table>
+<h2>Create New</h2>
+<form (ngSubmit)="add()" [formGroup]="form" fxLayout="column" fxLayoutAlign="center" fxFlexOffset="1">
+  <mat-form-field appearance="fill">
+    <mat-label>Name</mat-label>
+    <input formControlName="name" matInput
+    />
+  </mat-form-field>
+  <mat-error *ngIf="form.get('name').invalid && form.get('name').touched">
+    <small *ngIf="form.get('name').errors.required">Name is required</small>
+    <small *ngIf="form.get('name').errors.minlength">Name length must be more than 1</small>
+  </mat-error>
+  <mat-form-field appearance="standard">
+    <mat-label>Phone number</mat-label>
+    <input matInput formControlName="phone" type="tel"
+           [textMask]="{mask: phoneMask, guide: true}">
+    <mat-hint>Format: +XX (YYY) XX-XX-XXX</mat-hint>
+    <mat-icon matSuffix>phone</mat-icon>
+    <mat-error
+      *ngIf="form.get('phone').invalid && form.get('phone').touched">
+      <small *ngIf="form.get('name').errors.required">phone is required</small>
+      <small *ngIf="form.get('name').errors.minlength">Name length must be more than 1</small>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Salary</mat-label>
+    <input matInput type="number" formControlName="salary">
+    <span matPrefix>$&nbsp;</span>
+  </mat-form-field>
+  <mat-error *ngIf="form.get('salary').invalid && form.get('salary').touched">
+    <small *ngIf="form.get('salary').errors.required">Name is required</small>
+    <small *ngIf="form.get('salary').errors.min">Salary must be more than 0</small>
+  </mat-error>
+  <mat-form-field appearance="fill">
+    <mat-label>DateOfBirth</mat-label>
+    <input [matDatepicker]="picker" [max]="maxDate" formControlName="dateOfBirth"
+           matInput>
+    <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+    <mat-error *ngIf="form.get('dateOfBirth').hasError('required')">
+      Valid date required.
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Is Married</mat-label>
+    <mat-select formControlName="isMarried">
+      <mat-option value="True">
+        Yes
+      </mat-option>
+      <mat-option value="False">
+        No
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <button [disabled]="!form.valid" mat-flat-button type="submit">Submit</button>
+</form>
+</div>
