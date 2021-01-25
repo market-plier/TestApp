@@ -16,6 +16,9 @@ import {AppRoutingModule} from "./app-routing.module";
 import {MatNativeDateModule} from "@angular/material/core";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {TextMaskModule} from "angular2-text-mask";
+import {MatSortModule} from "@angular/material/sort";
+import {DatePipe} from "@angular/common";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 @NgModule({
   declarations: [
@@ -38,9 +41,11 @@ import {TextMaskModule} from "angular2-text-mask";
     MatNativeDateModule,
     MatButtonModule,
     MatIconModule,
-    TextMaskModule
+    TextMaskModule,
+    MatSortModule,
+    MatTooltipModule
   ],
-  providers: [MatDatepickerModule],
+  providers: [MatDatepickerModule, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -29,4 +29,11 @@ export class ApiService {
   createPerson(person: Person): Observable<any> {
     return this.http.post(this.baseUrl, person);
   }
+
+  postFile(fileToUpload: File): Observable<any> {
+    const endpoint = this.baseUrl+'/import';
+    const formData: FormData = new FormData();
+    formData.append('file', fileToUpload, fileToUpload.name);
+    return this.http.post(endpoint, formData);
+  }
 }

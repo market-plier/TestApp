@@ -78,19 +78,15 @@ namespace TestApp.Controllers
 
         [HttpPost]
         [Route("import")]
-        public void ImportPerson(IFormFile file)
+        public async Task ImportPerson(IFormFile file)
         {
             using (var reader = new StreamReader(file.OpenReadStream()))
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
-                var records = csv.GetRecords<PersonCsv>().ToList();
-                foreach (var record in records)
-                {
-                    
-                }
-               _context.AddRange(records);
+                var records = csv.GetRecords<PersonCsv>().Select(Person.ParseFromCsv).ToList();
+                _context.AddRange(records);
+                await _context.SaveChangesAsync();
             }
-
         }
         // POST: api/People
         [HttpPost]

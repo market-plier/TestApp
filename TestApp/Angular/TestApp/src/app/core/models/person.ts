@@ -1,8 +1,8 @@
 export class Person {
-  id: number;
-  name: string;
-  dateOfBirth: string;
+  id?: number;
+  name?: string;
+  dateOfBirth?: Date;
   isMarried: boolean;
-  salary: number;
-  phone: string;
+  salary?: number;
+  phone?: string;
 }
